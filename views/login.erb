@@ -1,10 +1,13 @@
-<h2>login</h2>
+<h2>Login</h2>
+<% if logged_in? %>
+    <p>You are already logged in</p>
+<% else %>
+    <form action="/login" method="post">
+        <label for="">Username</label>
+        <input type="text" name="username">
 
-<form action="/login" method="post">
-    <label for="">Username</label>
-    <input type="text" name="username">
-
-    <label for="">Password</label>
-    <input type="password" name="password">
-    <button>Login</button>
-</form>
+        <label for="">Password</label>
+        <input type="password" name="password">
+        <button>Login</button>
+    </form>
+<% end %>
