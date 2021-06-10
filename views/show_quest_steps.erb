@@ -1,5 +1,14 @@
+<% require "pry" %>
+
 <h2>Quest Steps</h2>
 
-<%= res %>
-<%= res[0]["name"] %>
-
+<Ul>
+    <% res.each do |hash| %>
+            <li>
+            <form action="/show_quest_steps" method="post">
+                <%= hash["name"] %>
+                <button value="<%= hash["id"] %>" name="id">Complete</button>
+            </form>
+        </li>
+    <% end %>
+</Ul>
