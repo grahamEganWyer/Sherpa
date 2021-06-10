@@ -10,7 +10,7 @@ require_relative "db/helpers.rb"
 enable :sessions
 
 def current_user
-  run_sql("SELECT * FROM users WHERE id = #{session[:user_id]};")[0]
+  run_sql("SELECT * FROM users WHERE id = #{session[:user_id]};")
 end
 
 def logged_in?
@@ -26,16 +26,17 @@ get '/' do
 end
 
 get '/show_quest_steps' do
-  res = run_sql("SELECT * FROM attunement;").to_a
+  res = run_sql("SELECT * FROM steps;").to_a
   # db = PG.connect(ENV['DATABASE_URL'] || {dbname: 'sherpa'})
   # res = (db.exec("SELECT * FROM attunement;")).to_a
   erb :show_quest_steps, locals: { res: res }
 end
 
 post '/show_quest_steps' do
-  sql = "UPDATE users SET steps_completed[#{params["id"]}] = '#{params["id"]}' WHERE id = #{current_user["id"]};"
+  binding.pry
+  sql = "UPDATE users SET steps_completed[#{params["id"]}] = '#{params["id"]}' WHERE id = #{current_user[0]["id"]};"
   run_sql(sql)
-  redirect 'show_quest_steps'
+  redirect '/show_quest_steps'
 end
 
 
@@ -53,6 +54,7 @@ post "/login" do
 
     logged_in_user = records[0]
     session[:user_id] = logged_in_user["id"]
+    session[:username] = logged_in_user["username"]
     redirect '/show_quest_steps'
 
   else
@@ -68,7 +70,7 @@ post '/signup' do
   records = run_sql("SELECT * FROM users WHERE username = '#{params['username']}';").to_a
   password_digest = BCrypt::Password.create(params['password'])
   user_level = params['user_level'].to_i
-  sql = "INSERT INTO users (username, password_digest, user_level) VALUES ('#{params['username']}', '#{password_digest}', '#{user_level}')"
+  sql = "INSERT INTO users (username, password_digest, user_level, steps_completed[0]) VALUES ('#{params['username']}', '#{password_digest}', '#{user_level}', '0')"
 
   
   # records = run_sql("SELECT * FROM users WHERE username = $1;", [params['username']]).to_a

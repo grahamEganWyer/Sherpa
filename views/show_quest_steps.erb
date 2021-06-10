@@ -4,11 +4,17 @@
 
 <Ul>
     <% res.each do |hash| %>
+        <% step_id = hash["id"].to_s %>
+        <% if current_user[0]["steps_completed"].include? step_id %>   
+            <% next %>
+        <% else %>
             <li>
-            <form action="/show_quest_steps" method="post">
-                <%= hash["name"] %>
-                <button value="<%= hash["id"] %>" name="id">Complete</button>
-            </form>
-        </li>
+                <form action="/show_quest_steps" method="post">
+                    <%= hash["step_name"] %>
+                    <button value="<%= hash["id"] %>" name="id">Complete</button>
+                </form>
+            </li>           
+        <% end %>
     <% end %>
+    <% binding.pry %>
 </Ul>
