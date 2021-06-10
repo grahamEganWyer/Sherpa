@@ -14,7 +14,6 @@ end
 get '/show_quest_steps' do
   db = PG.connect(ENV['DATABASE_URL'] || {dbname: 'sherpa'})
   res = (db.exec("SELECT * FROM attunement;")).to_a
-  binding.pry
   erb :show_quest_steps, locals: { res: res }
 end
 

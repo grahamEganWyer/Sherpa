@@ -1,5 +1,4 @@
 require 'bcrypt'
-require 'pry'
 
 require_relative 'helpers.rb'
 
