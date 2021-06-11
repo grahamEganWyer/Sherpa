@@ -9,8 +9,9 @@
         <button>Login</button>
     </form>
 
-    
-    <form action="/show_quest_steps" method="get">
-      <button>Get Questing</button>
-    </form>
+    <% if logged_in? %>
+        <form action="/show_quest_steps" method="get">
+            <button>Get Questing</button>
+        </form>
+    <% end %>
     

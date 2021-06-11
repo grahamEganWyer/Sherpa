@@ -33,7 +33,6 @@ get '/show_quest_steps' do
 end
 
 post '/show_quest_steps' do
-  binding.pry
   sql = "UPDATE users SET steps_completed[#{params["id"]}] = '#{params["id"]}' WHERE id = #{current_user[0]["id"]};"
   run_sql(sql)
   redirect '/show_quest_steps'
@@ -70,7 +69,7 @@ post '/signup' do
   records = run_sql("SELECT * FROM users WHERE username = '#{params['username']}';").to_a
   password_digest = BCrypt::Password.create(params['password'])
   user_level = params['user_level'].to_i
-  sql = "INSERT INTO users (username, password_digest, user_level, steps_completed[0]) VALUES ('#{params['username']}', '#{password_digest}', '#{user_level}', '0')"
+  sql = "INSERT INTO users (username, password_digest, user_level, steps_completed[0]) VALUES ('#{params['username']}', '#{password_digest}', '#{user_level}', #{0})"
 
   
   # records = run_sql("SELECT * FROM users WHERE username = $1;", [params['username']]).to_a

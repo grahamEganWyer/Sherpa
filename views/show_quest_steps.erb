@@ -2,9 +2,10 @@
 
 <h2>Quest Steps</h2>
 
+
 <Ul>
     <% res.each do |hash| %>
-        <% step_id = hash["id"].to_s %>
+        <% step_id = hash["id"] %>
         <% if current_user[0]["steps_completed"].include? step_id %>   
             <% next %>
         <% else %>
@@ -16,5 +17,4 @@
             </li>           
         <% end %>
     <% end %>
-    <% binding.pry %>
 </Ul>
